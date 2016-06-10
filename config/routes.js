@@ -47,6 +47,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   'GET /users': 'UserController.find',
+  'POST /users': 'UserController.create',
 
 
 };
