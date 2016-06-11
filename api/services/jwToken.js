@@ -7,7 +7,8 @@
  
 var
   jwt = require('jsonwebtoken'),
-  tokenSecret = "ObjectIsAdvantag";
+
+  tokenSecret = process.env.JWTSECRET || "ObjectIsAdvantag";
 
 // Generates a token from supplied payload
 module.exports.issue = function(payload) {
