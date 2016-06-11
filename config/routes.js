@@ -46,8 +46,16 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'GET /auth': 'AuthController.index',
+
   'GET /users': 'UserController.find',
   'POST /users': 'UserController.create',
+
+  'GET /credits': 'CreditController.find',
+  'POST /credits': 'CreditController.create',
+
+  'GET /credits/:user': 'CreditController.findOne',
+  'GET /credits/:user/decrement': 'CreditController.decrement'
 
 
 };

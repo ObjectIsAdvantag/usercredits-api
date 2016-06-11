@@ -17,7 +17,7 @@ module.exports.issue = function(payload) {
     {
       //expiresIn : "180m" // Token Expire time
       algorithm: "HS512", // Make it solid
-      issuer: "ObjectIsAdvantag"
+      issuer: "Stève Sfartz"
     }
   );
 };

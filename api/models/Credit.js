@@ -7,8 +7,33 @@
 
 module.exports = {
 
-  attributes: {
+  schema: true,
 
+ attributes: {
+
+    // api consumer who created the UserCredit
+    account: {
+      type: 'email',
+      required: true
+    },
+
+    // to identify the user we gave credits to
+    // should be unique among an owner set of users
+    user: {
+      type: 'email',
+      required: true
+    },
+
+    secret: {
+      type: 'string',
+      required: true
+    },
+
+    credits: {
+      type: 'integer',
+      required: true,
+      defaultsTo: 0
+    }
   }
 };
 

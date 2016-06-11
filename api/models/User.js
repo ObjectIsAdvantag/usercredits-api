@@ -11,12 +11,13 @@ var bcrypt = require('bcrypt');
 module.exports = {
   
   schema: true,
+
+  autoPK: false,
   
   attributes: {
     email: {
       type: 'email',
-      required: 'true',
-      unique: true // Yes unique one
+      unique: true
     },
 
     encryptedPassword: {
@@ -26,6 +27,9 @@ module.exports = {
     toJSON: function () {
       var obj = this.toObject();
       delete obj.encryptedPassword;
+      obj.since = obj.createdAt;
+      delete obj.createdAt;
+      delete obj.updatedAt;
       return obj;
     }
   },
