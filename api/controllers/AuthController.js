@@ -12,19 +12,19 @@ module.exports = {
     var password = req.param('password');
     if (!email || !password) return res.json(401, { err: 'email and password required' });
 
-    User.findOne({ email: email }, function (err, user) {
-      if (!user) return res.json(401, { err: 'invalid email or password' });
+    Account.findOne({ email: email }, function (err, account) {
+      if (!account) return res.json(401, { err: 'invalid email or password' });
 
-      User.comparePassword(password, user, function (err, valid) {
+      Account.comparePassword(password, account, function (err, valid) {
         if (err) return res.json(403, { err: 'forbidden' });
         if (!valid) return res.json(401, { err: 'invalid email or password' });
 
         // Create new token id
         // [WORKAROUND] update and not save Object as we want this code to work against ORM without primary key support (ie, in-memory)
-        User.update({ email: user.email }, { activeTokenId: Date.now().toString() }).exec(function afterwards(err, updatedRows) {
-          if (err) return res.json(500, { err: 'could not issue a new token for email: ' + user.email });
+        Account.update({ email: account.email }, { activeTokenId: Date.now().toString() }).exec(function afterwards(err, updatedRows) {
+          if (err) return res.json(500, { err: 'could not issue a new token for email: ' + account.email });
 
-          res.json(200, { token: jwToken.issue({ email: user.email, tokenId: updatedRows[0].activeTokenId }) });
+          res.json(200, { token: jwToken.issue({ email: account.email, tokenId: updatedRows[0].activeTokenId }) });
         });
       });
     })

@@ -29,14 +29,15 @@ module.exports.policies = {
 
   '*': ['isAuthorized'], // Everything restricted here
 
-  'UserController': {
+  'AccountController': {
     '*': false,
-    'create': true, // We dont need authorization here, allowing public access
-    'find': ['isAuthorized']
+    'create': true, // Public access
+    'find': ['isAuthorized'] //
   },
 
   'AuthController': {
-    'reissueToken': true // We dont need authorization here, allowing public access
+    '*': false,
+    'reissueToken': true // Public access
   }
 
   /***************************************************************************

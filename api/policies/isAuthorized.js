@@ -2,7 +2,7 @@
  * sessionAuth
  *
  * @module      :: Policy
- * @description :: Simple policy to allow any authenticated user
+ * @description :: Simple policy to allow any authenticated access
  *                 Assumes that your login action in one of your controllers sets `req.session.authenticated = true;`
  * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
  *
@@ -23,7 +23,7 @@ module.exports = function (req, res, next) {
       }
     }
     else {
-      // User is not allowed
+      // Access is not allowed
       // (default res.forbidden() behavior can be overridden in `config/403.js`)
       return res.forbidden('Format is Authorization: Bearer [token]');
     }
@@ -53,12 +53,12 @@ module.exports = function (req, res, next) {
     if (!decryptedToken.email) return res.json(401, { err: 'Invalid Token [code:2]' });
     if (!decryptedToken.tokenId) return res.json(401, { err: 'Invalid Token [code:3]' });
 
-    // Consistency: Check we have a User for this token
-    User.findOne({ email: decryptedToken.email }, function (err, user) {
-      if (!user) return res.json(401, { err: 'Invalid Token [code:4]' });
+    // Consistency: Check we have an Account for this token
+    Account.findOne({ email: decryptedToken.email }, function (err, account) {
+      if (!account) return res.json(401, { err: 'Invalid Token [code:4]' });
 
       // Security: Check the tokenId is correct
-      if (decryptedToken.tokenId != user.activeTokenId) {
+      if (decryptedToken.tokenId != account.activeTokenId) {
         return res.json(401, { err: 'Invalid Token [code:5]' });
       }
 

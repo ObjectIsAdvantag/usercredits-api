@@ -1,5 +1,5 @@
 /**
- * Users.js
+ * Account.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
@@ -44,7 +44,7 @@ module.exports = {
     }
   },
 
-  // Here we encrypt password before creating a User
+  // Here we encrypt password before creating an Account
   beforeCreate : function (values, next) {
     bcrypt.genSalt(10, function (err, salt) {
       if(err) return next(err);
@@ -56,8 +56,8 @@ module.exports = {
     })
   },
 
-  comparePassword : function (password, user, cb) {
-    bcrypt.compare(password, user.encryptedPassword, function (err, match) {
+  comparePassword : function (password, account, cb) {
+    bcrypt.compare(password, account.encryptedPassword, function (err, match) {
 
       if(err) cb(err);
       if(match) {

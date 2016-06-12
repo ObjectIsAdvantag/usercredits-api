@@ -48,8 +48,8 @@ module.exports.routes = {
 
   'GET /token': 'AuthController.reissueToken',
 
-  'GET /accounts': 'UserController.find',
-  'POST /accounts': 'UserController.create',
+  'GET /accounts': 'AccountController.find',
+  'POST /accounts': 'AccountController.create',
 
   'GET /credits': 'CreditController.find',
   'POST /credits': 'CreditController.create',
