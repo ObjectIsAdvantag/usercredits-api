@@ -32,7 +32,7 @@ module.exports.connections = {
     adapter: 'sails-disk'
   },
 
-   memory: {
+  memory: {
     adapter: 'sails-memory'
   },
 
@@ -79,13 +79,15 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  // somePostgresqlServer: {
-  //   adapter: 'sails-postgresql',
-  //   host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-  //   user: 'YOUR_POSTGRES_USER', // optional
-  //   password: 'YOUR_POSTGRES_PASSWORD', // optional
-  //   database: 'YOUR_POSTGRES_DB' //optional
-  // }
+  clevercloud: {
+    adapter: 'sails-postgresql',
+    host: process.env.POSTGRESQL_ADDON_HOST,
+    //host: process.env.POSTGRESQL_ADDON_URI,
+    port: process.env.POSTGRESQL_ADDON_PORT,
+    user: process.env.POSTGRESQL_ADDON_USER,
+    password: process.env.POSTGRESQL_ADDON_PASSWORD,
+    database: process.env.POSTGRESQL_ADDON_DB
+  }
 
 
   /***************************************************************************
