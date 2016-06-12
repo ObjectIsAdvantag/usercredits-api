@@ -39,7 +39,7 @@ module.exports = {
       delete obj.encryptedPassword;
       delete obj.createdAt;
       delete obj.updatedAt;
-      //delete obj.activeTokenId;
+      delete obj.activeTokenId;
       return obj;
     }
   },
