@@ -45,15 +45,22 @@ module.exports = function (req, res, next) {
     }
   }
 
-  // Check token is valid
+  // Security: Check token is valid
   jwToken.verify(token, function (err, decryptedToken) {
-    if (err) return res.json(401, { err: 'Invalid Token!' });
+    if (err) return res.json(401, { err: 'Invalid Token [code:1]' });
 
-    if (!decryptedToken.email) return res.json(401, { err: 'Invalid Token !!!' });
+    // Security: Check token is well formed
+    if (!decryptedToken.email) return res.json(401, { err: 'Invalid Token [code:2]' });
+    if (!decryptedToken.tokenId) return res.json(401, { err: 'Invalid Token [code:3]' });
 
-    // TODO Consistency : Check we have a User for this token
+    // Consistency: Check we have a User for this token
     User.findOne({ email: decryptedToken.email }, function (err, user) {
-      if (!user) return res.json(401, { err: 'no account found for email: ' + decryptedToken.email });
+      if (!user) return res.json(401, { err: 'Invalid Token [code:4]' });
+
+      // Security: Check the tokenId is correct
+      if (decryptedToken.tokenId != user.activeTokenId) {
+        return res.json(401, { err: 'Invalid Token [code:5]' });
+      }
 
       req.token = decryptedToken;
 

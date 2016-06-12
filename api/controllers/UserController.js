@@ -14,12 +14,13 @@ module.exports = {
       if (err) {
         return res.json(err.status, {err: err});
       }
-      // If user created successfuly we return token as response
+      // If user created successfuly we return an API token
       if (user) {
-        // NOTE: payload is { id: user.id}
-        res.json(201, { token: jwToken.issue({email: user.email})});
+        res.json(201, { token: jwToken.issue({email: user.email, tokenId: user.activeTokenId })});
       }
     });
   }
+
+
 
 };

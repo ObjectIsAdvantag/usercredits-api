@@ -23,16 +23,27 @@ module.exports = {
     encryptedPassword: {
       type: 'string'
     },
+
+    activeTokenId: {
+      type: 'string',
+      required: true,
+      defaultsTo : function () {
+         return Date.now();
+      }
+    },
+
     // We don't wan't to send back encrypted password either
     toJSON: function () {
       var obj = this.toObject();
+      obj.memberSince = obj.createdAt;
       delete obj.encryptedPassword;
-      obj.since = obj.createdAt;
       delete obj.createdAt;
       delete obj.updatedAt;
+      //delete obj.activeTokenId;
       return obj;
     }
   },
+
   // Here we encrypt password before creating a User
   beforeCreate : function (values, next) {
     bcrypt.genSalt(10, function (err, salt) {
