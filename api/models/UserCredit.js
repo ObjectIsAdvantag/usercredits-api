@@ -9,7 +9,7 @@ module.exports = {
 
   schema: true,
 
- attributes: {
+  attributes: {
 
     // api consumer who created the UserCredit
     account: {
@@ -33,7 +33,19 @@ module.exports = {
       type: 'integer',
       required: true,
       defaultsTo: 0
+    },
+
+    // Hide internal structure
+    toJSON: function () {
+      var obj = this.toObject();
+      delete obj.account;
+      delete obj.id;
+      //delete obj.createdAt;
+      //delete obj.updatedAt;
+      return obj;
     }
-  }
+  },
+
+
 };
 

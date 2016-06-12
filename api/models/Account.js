@@ -32,7 +32,7 @@ module.exports = {
       }
     },
 
-    // We don't wan't to send back encrypted password either
+    // We don't wan't to send back encrypted password and some other internal fields
     toJSON: function () {
       var obj = this.toObject();
       obj.memberSince = obj.createdAt;

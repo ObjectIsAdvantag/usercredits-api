@@ -54,5 +54,5 @@ module.exports.routes = {
   'POST /credits': 'UserCreditController.create',
   'GET /credits': 'UserCreditController.find',
   'POST /credits/:user/add': 'UserCreditController.addCredits',
-  'POST /credits/:user/decrement': 'UserCreditController.consumeCredit'
+  'POST /credits/:user/decrement': 'UserCreditController.consumeOneCredit'
 };
