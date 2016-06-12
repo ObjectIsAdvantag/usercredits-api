@@ -35,25 +35,55 @@ module.exports = {
     },
 
     consumeOneCredit: function (req, res) {
-    },
-
-    addCredits: function (req, res) {
+        // Check args
         var user = req.param('user');
         if (!user) return res.json(400, { err: 'wrong path, no user specified' });
 
-        if (!req.param('credits')) return res.json(400, { err: 'credits query parameter is missing, please specify ?credits=XX' });
-        credits = parseInt(req.param('credits'));
+        var secret = req.param('secret');
+        if (!secret) return res.json(400, { err: 'secret parameter is missing, please specify ?secret=XXXXXXXX' });
 
+        // Decrement User Credit
+        UserCredit.find({ account: req.token.email, user: user }, function (err, createdOrFoundRecords) {
+            if (err) return res.json(500, { err: 'could not retreive Credits for user:' + user });
+
+            UserCredit.find({ account: req.token.email, user: user, secret: secret }, function (err, createdOrFoundRecords) {
+                if (err) return res.json(500, { err: 'could not retreive Credits for user/secret:' + user });
+
+                if (createdOrFoundRecords.length != 1) return res.json(403, { err: 'wrong secret' });
+
+                UserCredit.update({ account: req.token.email, user: user }, { credits: createdOrFoundRecords[0].credits - 1 }, function (err, newUserCredit) {
+                    if (err) return res.json(500, { err: 'could not decrement Credits for user:' + user });
+
+                    if (newUserCredit.length != 1) return res.json(500, { err: 'could not decrement Credits for user:' + user });
+
+                    return res.json(200, newUserCredit[0]);
+                });
+            });
+        });
+    },
+
+    addCredits: function (req, res) {
+
+        // Check args
+        var user = req.param('user');
+        if (!user) return res.json(400, { err: 'wrong path, no user specified' });
+
+        if (!req.param('credits')) return res.json(400, { err: 'credits parameter is missing, please specify ?credits=XX' });
+        var credits = parseInt(req.param('credits'));
+        if (!credits) return res.json(400, { err: 'credits parameter should be an integer' });
+        
+        // Increment User Credit
         UserCredit.find({ account: req.token.email, user: user }, function (err, createdOrFoundRecords) {
             if (err) return res.json(500, { err: 'could not retreive Credits for user:' + user });
 
             if (createdOrFoundRecords.length != 1) return res.json(500, { err: 'cannot update Credits for user: ' + user });
- 
+
             UserCredit.update({ account: req.token.email, user: user }, { credits: createdOrFoundRecords[0].credits + credits }, function (err, newUserCredit) {
                 if (err) return res.json(500, { err: 'could not add Credits for user:' + user });
 
-                if (newUserCredit.lenght != 1)
-                return res.json(200, newUserCredit);
+                if (newUserCredit.length != 1) return res.json(500, { err: 'could not add Credits for user:' + user });
+
+                return res.json(200, newUserCredit[0]);
             });
         });
     }

@@ -41,6 +41,6 @@ module.exports.policies = {
     'create': ['isAuthorized'],
     'find': ['isAuthorized'], 
     'addCredits': ['isAuthorized'], 
-    'consumeCredit': ['isAuthorized'], 
+    'consumeOneCredit': ['isAuthorized'], 
   }
 };
