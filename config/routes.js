@@ -46,16 +46,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  
+  'POST /accounts': 'AccountController.create',
+  'GET /accounts': 'AccountController.find',
   'GET /token': 'AuthController.reissueToken',
 
-  'GET /accounts': 'AccountController.find',
-  'POST /accounts': 'AccountController.create',
-
-  'GET /credits': 'CreditController.find',
-  'POST /credits': 'CreditController.create',
-
-  'GET /credits/:user': 'CreditController.findOne',
-  'GET /credits/:user/decrement': 'CreditController.decrement'
-
-
+  'POST /credits': 'UserCreditController.create',
+  'GET /credits': 'UserCreditController.find',
+  'POST /credits/:user/add': 'UserCreditController.addCredits',
+  'POST /credits/:user/decrement': 'UserCreditController.consumeCredit'
 };
