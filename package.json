@@ -33,8 +33,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/credits.git"
+    "url": "git://github.com/ObjectIsAdvantag/usercredits-api.git"
   },
-  "author": "anonymous node/sails user",
-  "license": ""
+  "author": "Stève Sfartz",
+  "license": "MIT"
 }

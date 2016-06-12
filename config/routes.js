@@ -46,7 +46,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  
+  'GET /ping': 'HealthCheckController.check',
+
   'POST /accounts': 'AccountController.create',
   'GET /accounts': 'AccountController.find',
   'GET /token': 'AuthController.reissueToken',

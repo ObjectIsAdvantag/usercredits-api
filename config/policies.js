@@ -28,6 +28,10 @@ module.exports.policies = {
 
   '*': false, // Maximum security, access prohibited to Controllers
 
+ 'HealthCheckController': {
+    'check': true // Public access
+  },
+
   'AccountController': {
     'create': true, // Public access
     'find': ['isAuthorized']
